@@ -2,6 +2,7 @@ package com.ant.ttf.domain.history.service;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -56,6 +57,13 @@ public class HistoryServiceImpl implements HistoryService {
 		return today;
 	}
 	public ThreeMonthInfoDTO getThreeMonthInfo(String token) {
+		ThreeMonthInfoDTO result = new ThreeMonthInfoDTO();
+		String userPk = jwtTokenProvider.getUserPk(token);
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		//어카지...
+		map.put("userPk", userPk);
+
 		return null;
 	}
 	
