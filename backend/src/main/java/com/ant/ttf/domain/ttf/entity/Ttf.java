@@ -20,7 +20,7 @@ public class Ttf {
 	private String end_date;
 	private int acc_ck;
 	private int balance;
-	private int limit;
+	private int limitAmount;
 	private String account_num;
 	private String qrImage;
 	private int bnpl;

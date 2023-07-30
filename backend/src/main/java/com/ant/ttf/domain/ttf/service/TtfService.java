@@ -6,5 +6,6 @@ import com.ant.ttf.domain.ttf.dto.request.TtfJoinReqDTO;
 
 @Service
 public interface TtfService {
-	public void thinJoin(String token, TtfJoinReqDTO dto) throws Exception;
+	public void thinJoin(String token, TtfJoinReqDTO dto) throws Exception; // 신파일러 적금 가입
+	public boolean ttfPay(String token, String product_price) throws Exception; // 한도초과시 상품결제 막기
 }

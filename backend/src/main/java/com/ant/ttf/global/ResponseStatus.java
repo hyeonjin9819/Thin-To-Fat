@@ -27,7 +27,13 @@ public enum ResponseStatus {
 	// 수입/지출 내역
 	HISTORY_GET_FILTERELEMENT_SUCCESS("H007", "카테고리, 계좌 필터 요소 가져오기 성공"),
 	HISTORY_GET_FILTERDATA_SUCCESS("H008", "달, 카테고리, 은행 별 지출내역 가져오기 성공"),
-	HISTORY_GET_HISTORYINFO_SUCCESs("H009", "수입 / 지출 내역 상단 데이터 가져오기 성공");
+	HISTORY_GET_HISTORYINFO_SUCCESs("H009", "수입 / 지출 내역 상단 데이터 가져오기 성공"),
+	
+	// 신파일러 관련 API
+	TTF_POSTSIGNUP_SUCCESS("T001", "신파일러 적금 가입하기 성공"),
+	TTF_PUTPAY_SUCCESS("T002", "상품 결제 성공"),
+	TTF_PUTPAYSTOP_SUCCESS("T003", "한도 초과 결제 실패");
+	
 	
 	
 	// 위와 유사하게 적어주세요
