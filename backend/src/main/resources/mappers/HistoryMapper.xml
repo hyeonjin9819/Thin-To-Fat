@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="findMonthExpend" parameterType="hashMap" resultType="int">
-		SELECT SUM(price)
+		SELECT IFNULL(SUM(price), 0)
 		FROM ttf.history
 		WHERE MONTH(pay_time) = #{month} AND price_ck=-1 AND YEAR(pay_time) = YEAR(sysdate()) AND user_id = #{userPk}
 		<if test="category != null">
