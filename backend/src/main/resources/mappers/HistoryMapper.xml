@@ -1,0 +1,21 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ant.ttf.domain.history.mapper.HistoryMapper">
+	<select id="findCategoryExpend" resultType="com.ant.ttf.domain.history.dto.response.CategoryExpendsDTO">
+		SELECT user_id AS uPk, c.category_id AS cPk, name, img_url AS imgUrl, color, sum(price) AS price
+		FROM ttf.history h join ttf.categoryinfo c 
+		ON c.category_id = h.category_id
+		WHERE MONTH(pay_time) = MONTH(sysdate()) and price_ck = -1 and user_id=#{userPk}
+		GROUP BY c.category_id
+		ORDER BY price DESC;
+	</select>
+	
+	<select id="findTodayExpend" resultType="com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO">
+		SELECT sum(price) as dayExpend
+		FROM ttf.history
+		WHERE user_id = #{userPk} AND price_ck = -1 AND date_format(pay_time, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')
+		GROUP BY date_format(pay_time, '%Y-%m-%d');
+	</select>
+	
+</mapper>
+
