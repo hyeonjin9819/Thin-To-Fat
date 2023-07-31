@@ -18,8 +18,8 @@
 		GROUP BY date_format(pay_time, '%Y-%m-%d');
 	</select>
 	
-	<select id="findMonthExpend" parameterType="hashMap" resultType="int">
-		SELECT IFNULL(SUM(price), 0)
+	<select id="findMonthExpend" parameterType="hashMap" resultType="double">
+		SELECT IFNULL(ROUND((SUM(price)/10000),1), 0)
 		FROM ttf.history
 		WHERE MONTH(pay_time) = #{month} AND price_ck=-1 AND YEAR(pay_time) = YEAR(sysdate()) AND user_id = #{userPk}
 		<if test="category != null">

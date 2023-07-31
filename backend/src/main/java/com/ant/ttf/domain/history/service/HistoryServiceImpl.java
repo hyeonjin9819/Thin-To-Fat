@@ -77,13 +77,13 @@ public class HistoryServiceImpl implements HistoryService {
 		
 		//지출합계
 		map.put("month",monthValue-1);
-		double expend1ago = Math.round((historyMapper.findMonthExpend(map)/10000)*10)/10.0;
+		double expend1ago = historyMapper.findMonthExpend(map);
 		result.setExpend1ago(expend1ago);
 		map.put("month",monthValue-2);
-		double expend2ago = Math.round((historyMapper.findMonthExpend(map)/10000)*10)/10.0;
+		double expend2ago = historyMapper.findMonthExpend(map);
 		result.setExpend2ago(expend2ago);
 		map.put("month",monthValue-3);
-		double expend3ago = Math.round((historyMapper.findMonthExpend(map)/10000)*10)/10.0;
+		double expend3ago = historyMapper.findMonthExpend(map);
 		result.setExpend3ago(expend3ago);
 		
 		result.setExpendTotal(expend1ago+expend2ago+expend3ago);
@@ -92,13 +92,13 @@ public class HistoryServiceImpl implements HistoryService {
 		//저축합계
 		map.put("category", 11);
 		map.put("month",monthValue-1);
-		double saving1ago = Math.round((historyMapper.findMonthExpend(map)/10000)*10)/10.0;
+		double saving1ago = historyMapper.findMonthExpend(map);
 		result.setSaving1ago(saving1ago);
 		map.put("month",monthValue-2);
-		double saving2ago = Math.round((historyMapper.findMonthExpend(map)/10000)*10)/10.0;
+		double saving2ago = historyMapper.findMonthExpend(map);
 		result.setSaving2ago(saving2ago);
 		map.put("month",monthValue-3);
-		double saving3ago = Math.round((historyMapper.findMonthExpend(map)/10000)*10)/10.0;
+		double saving3ago = historyMapper.findMonthExpend(map);
 		result.setSaving3ago(saving3ago);
 		
 		result.setSavingAver(Math.round(((saving3ago+saving2ago+saving1ago)/3)*10)/10.0);
@@ -106,5 +106,4 @@ public class HistoryServiceImpl implements HistoryService {
 		return result;
 	}
 	
-	//Map<String,Object>map = new HashMap<String,Object>();????
 }

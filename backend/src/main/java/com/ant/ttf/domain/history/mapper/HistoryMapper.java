@@ -12,6 +12,6 @@ import com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO;
 public interface HistoryMapper {
 	List<CategoryExpendsDTO> findCategoryExpend(String userPk);
 	TodayStateInfoDTO findTodayExpend(String userPk);
-	int findMonthExpend(HashMap info);
+	double findMonthExpend(HashMap info);
 	int findCafeExpendCount(String userPk);
 }
