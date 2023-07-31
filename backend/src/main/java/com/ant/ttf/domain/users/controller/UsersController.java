@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,5 +70,22 @@ public class UsersController {
     	return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
     }
     
+    // 대시보드 상단 월 예산 수정하는 API
+    @PutMapping("/dashboard/income")
+    public ResponseEntity<ResponseFormat<String>> updateIncome(@RequestHeader("X-AUTH-TOKEN") String token, int income) throws Exception{
+    	String userPk = jwtTokenProvider.getUserPk(token);
+    	userMapper.updateIncome(userPk, income);
+    	ResponseFormat<String> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_PUT_USERINCOME_SUCCESS);
+    	return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+    }
+    
+    // 대시보드 상단 목표 금 수정하는 API
+    @PutMapping("/dashboard/goalBudget")
+    public ResponseEntity<ResponseFormat<String>> updateGoalBudget(@RequestHeader("X-AUTH-TOKEN") String token, int goalBudget) throws Exception{
+    	String userPk = jwtTokenProvider.getUserPk(token);
+    	userMapper.updateGoalBudget(userPk, goalBudget);
+    	ResponseFormat<String> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_PUT_USERBUDGET_SUCCESS);
+    	return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+    }
    
 }

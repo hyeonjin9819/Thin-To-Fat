@@ -14,4 +14,6 @@ public interface UsersMapper {
     Optional<Users> findByUserId(Long userId);
     Users findUserInfoByPk(String userPk);
     void userSignUp(UsersRequestDTO sigUpdto);
+    void updateIncome(String userPk, int income);
+    void updateGoalBudget(String userPk, int goalBudget);
 }
