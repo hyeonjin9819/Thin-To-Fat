@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ant.ttf.domain.history.dto.response.CategoryExpendsDTO;
+import com.ant.ttf.domain.history.dto.response.MonthlyPriceDTO;
 import com.ant.ttf.domain.history.dto.response.ThreeMonthInfoDTO;
 import com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO;
 import com.ant.ttf.domain.history.mapper.HistoryMapper;
@@ -57,6 +58,22 @@ public class HistoryServiceImpl implements HistoryService {
 	}
 	public ThreeMonthInfoDTO getThreeMonthInfo(String token) {
 		return null;
+	}
+	
+	// 매달 예상 고정 지출
+	@Override
+	public String fixedPrice(String token) {
+		String userPk = jwtTokenProvider.getUserPk(token);
+		Users userDto = userMapper.findUserInfoByPk(userPk);
+		String fixed = historyMapper.expectMonthlyFixedPrice(userPk);
+		return fixed;
+	}
+	
+	// 달별 올해 지출 기록 
+	public List<MonthlyPriceDTO> getMonPriceList(String token){
+		String userPk = jwtTokenProvider.getUserPk(token);
+		List<MonthlyPriceDTO> monPriceList = historyMapper.findMonthlyExpend(userPk);
+		return monPriceList;
 	}
 	
 	//Map<String,Object>map = new HashMap<String,Object>();????

@@ -7,13 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ant.ttf.domain.history.dto.response.CategoryExpendsDTO;
+import com.ant.ttf.domain.history.dto.response.MonthlyPriceDTO;
 import com.ant.ttf.domain.history.dto.response.ThreeMonthInfoDTO;
 import com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO;
 import com.ant.ttf.domain.history.service.HistoryService;
@@ -28,8 +28,6 @@ import lombok.extern.java.Log;
 @Log
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class HistoryController {
-	@Autowired
-	PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	HistoryService historyService;
@@ -58,6 +56,22 @@ public class HistoryController {
 	public ResponseEntity<ResponseFormat<ThreeMonthInfoDTO>> threeMonthExpends(@RequestHeader("X-AUTH-TOKEN") String token) throws Exception{
 		ThreeMonthInfoDTO info = historyService.getThreeMonthInfo(token);
 		ResponseFormat<ThreeMonthInfoDTO> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTHREEMONTH_SUCCESS, info);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
+	// 매달 예상 고정 지출 금액 가져오는 API
+	@GetMapping("/dashboard/fixed")
+	public ResponseEntity<ResponseFormat<String>> monthlyFixedPrice(@RequestHeader("X-AUTH-TOKEN") String token) throws Exception{
+		String fixed = historyService.fixedPrice(token);
+		ResponseFormat<String> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYFIXED_SUCCESS, fixed);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
+	// 달별 올해 지출 기록 가져오는 API
+	@GetMapping("/dashboard/months")
+	public ResponseEntity<ResponseFormat<List<MonthlyPriceDTO>>> monthlyPrice(@RequestHeader("X-AUTH-TOKEN") String token) throws Exception{
+		List<MonthlyPriceDTO> monPrice = historyService.getMonPriceList(token);
+		ResponseFormat<List<MonthlyPriceDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYCATEGORY_SUCCESS, monPrice);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 
