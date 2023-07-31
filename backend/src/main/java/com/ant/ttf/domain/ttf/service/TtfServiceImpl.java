@@ -45,7 +45,7 @@ public class TtfServiceImpl implements TtfService {
 		if(limitBalance < productPrice) {
 			log.info("사용가능한도 초과");
 			return false;
-		} else {
+		} else { //사용가능 한도가 상품가격보다 크면 결제
 			limitBalance = limitBalance - productPrice;
 			Map map = new HashMap();
 			map.put("userPK", userPK);
