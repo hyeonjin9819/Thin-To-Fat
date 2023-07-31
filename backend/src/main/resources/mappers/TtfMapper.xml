@@ -28,5 +28,17 @@
 	WHERE user_id = #{userPK}
 	</update>
 	
+	<select id="seeBalance" parameterType="Long" resultType="Integer">
+	SELECT balance
+	FROM ttf.ttf
+	WHERE account_id = #{account_id}
+	</select>
+	
+	<select id="seeLimitAmount" parameterType="Long" resultType="Integer">
+	SELECT limitAmount
+	FROM ttf.ttf
+	WHERE account_id = #{account_id}
+	</select>
+	
 	
 </mapper>

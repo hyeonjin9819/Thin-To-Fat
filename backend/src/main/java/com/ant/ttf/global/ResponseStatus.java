@@ -32,7 +32,10 @@ public enum ResponseStatus {
 	// 신파일러 관련 API
 	TTF_POSTSIGNUP_SUCCESS("T001", "신파일러 적금 가입하기 성공"),
 	TTF_PUTPAY_SUCCESS("T002", "상품 결제 성공"),
-	TTF_PUTPAYSTOP_SUCCESS("T003", "한도 초과 결제 실패");
+	TTF_PUTPAYSTOP_SUCCESS("T003", "한도 초과 결제 실패"),
+	
+	//라이브러리 관련 API
+	LIBRARY_GETALLACC_SUCCESS("U001", "라이브러리 전체 가져오기 성공");
 	
 	
 	

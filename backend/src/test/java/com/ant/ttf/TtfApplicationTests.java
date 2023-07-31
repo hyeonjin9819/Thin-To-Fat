@@ -1,13 +1,17 @@
 package com.ant.ttf;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.ant.ttf.domain.library.dto.response.LibTotalResDTO;
+import com.ant.ttf.domain.library.entity.Account;
+import com.ant.ttf.domain.library.mapper.LibMapper;
 import com.ant.ttf.domain.ttf.dto.request.TtfJoinReqDTO;
 import com.ant.ttf.domain.ttf.entity.Ttf;
 import com.ant.ttf.domain.ttf.mapper.TtfMapper;
@@ -20,6 +24,8 @@ class TtfApplicationTests {
 	
 	@Autowired
 	TtfMapper ttfMapper;
+	@Autowired
+	LibMapper libMapper;
 
 	@Test
 	void contextLoads() {
@@ -91,10 +97,63 @@ class TtfApplicationTests {
 		}
 		
 		log.info("성공 :" + a);
-		
-		
-		 
 			
+	}
+	
+	
+	@Test
+	void monthIncome() { // 월예산 조회
+		String userPK = "1";
+		int month = libMapper.monthIncome(userPK);
+		String month2 = Integer.toString(month);
+		log.info("월예산:"+month2);
+		
+	}
+	
+	@Test
+	void temp() { //라이브러리(입출금계좌, 적금) 전체 가져오는 API
+		
+		String userPK = "1";
+		List<LibTotalResDTO> dtoList = new ArrayList<>();		
+		List<Account> list = new ArrayList<>();
+
+		list = libMapper.listAcc(userPK); // 특정 유저에 속한 모든 계좌를 list로 받는다.
+		
+		for(Account userAcc : list) {
+			
+			LibTotalResDTO dto = new LibTotalResDTO();
+			
+			//빌더이용해서 dto에 필요한 정보 넣기(from account 테이블)
+			dto = userAcc.convertDTO(userAcc);
+			
+			//bankinfo 테이블에서 은행이름과 이미지url 정보출력
+			String bankName = libMapper.nameImg(userAcc.getBank_info()).getName();
+			String urlinfo = libMapper.nameImg(userAcc.getBank_info()).getImg_url();
+			dto.setName(bankName); //dto에 은행이름 넣기
+			dto.setImg_url(urlinfo); // dto에 은행uri 넣기
+			
+			if(userAcc.getAcc_ck() == 0) { 
+				// 입출금계좌이면 dto의 monthBalance(한달사용지출액) = 유저의 월예산(유저테이블) - 통장잔고 (account테이블)
+				int monthIn = libMapper.monthIncome(userPK);
+				dto.setMonthBalance(monthIn - userAcc.getBalance()); // dto에 한달사용지출액 넣기
+				
+			} else if(userAcc.getAcc_ck() == 1) { //적금계좌일때
+				dto.setMonthBalance(0);
+			} else { // 신파일러 출금계좌일때, 한달사용금액 = balance - limitAmount
+				int Bala = ttfMapper.seeBalance(userAcc.getAccount_id());
+				int limitAmo = ttfMapper.seeLimitAmount(userAcc.getAccount_id());
+				dto.setMonthBalance(Bala - limitAmo);	
+			}
+			
+			dtoList.add(dto);	
+		}
+		
+		for(LibTotalResDTO dto2 : dtoList) {
+			
+			System.out.println("매달 사용한 금액:"+ dto2.getMonthBalance());
+			
+		}
+		
 	}
 	
 

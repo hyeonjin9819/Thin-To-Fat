@@ -36,7 +36,7 @@ public class ttfController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}  
 	
-	@PutMapping("/payrefusal")
+	@PutMapping("/payrefusal") //신파일러 결제 API
 	public ResponseEntity<ResponseFormat<ResponseStatus>> payProduct(@RequestHeader("X-AUTH-TOKEN") String token, @RequestParam("product_price") String product_price) throws Exception{
 		boolean mention = ttfService.ttfPay(token, product_price);
 		if (mention == false) {
