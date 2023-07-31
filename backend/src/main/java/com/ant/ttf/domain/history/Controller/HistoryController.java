@@ -1,6 +1,7 @@
 package com.ant.ttf.domain.history.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ant.ttf.domain.history.dto.response.CategoryExpendsDTO;
 import com.ant.ttf.domain.history.dto.response.ThreeMonthInfoDTO;
 import com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO;
+import com.ant.ttf.domain.history.dto.response.Top3MonthBudgetDTO;
+import com.ant.ttf.domain.history.mapper.HistoryMapper;
 import com.ant.ttf.domain.history.service.HistoryService;
 import com.ant.ttf.global.ResponseFormat;
 import com.ant.ttf.global.ResponseStatus;
@@ -36,6 +39,7 @@ public class HistoryController {
 	
 	@Autowired
 	JwtTokenProvider jwtTokenProvider;
+	
 	
 	//카테고리별 지출 합계 가져오는 API
 	@GetMapping("/dashboard/category")
@@ -58,6 +62,15 @@ public class HistoryController {
 	public ResponseEntity<ResponseFormat<ThreeMonthInfoDTO>> threeMonthExpends(@RequestHeader("X-AUTH-TOKEN") String token) throws Exception{
 		ThreeMonthInfoDTO info = historyService.getThreeMonthInfo(token);
 		ResponseFormat<ThreeMonthInfoDTO> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTHREEMONTH_SUCCESS, info);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
+	//Top 3, 예산소지율 가져오는 API
+	@GetMapping("/dashboard/top3")
+	public ResponseEntity<ResponseFormat<Top3MonthBudgetDTO>> topList(@RequestHeader("X-AUTH-TOKEN") String token) throws Exception{
+		
+		Top3MonthBudgetDTO result = historyService.getTopListBudget(token);
+		ResponseFormat<Top3MonthBudgetDTO> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTOP3_SUCCESS, result);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 

@@ -5,12 +5,14 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.ant.ttf.domain.history.dto.response.CategoryExpendsDTO;
 import com.ant.ttf.domain.history.dto.response.ThreeMonthInfoDTO;
 import com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO;
+import com.ant.ttf.domain.history.dto.response.Top3MonthBudgetDTO;
 import com.ant.ttf.domain.history.mapper.HistoryMapper;
 import com.ant.ttf.domain.users.entity.Users;
 import com.ant.ttf.domain.users.mapper.UsersMapper;
@@ -104,6 +106,20 @@ public class HistoryServiceImpl implements HistoryService {
 		result.setSavingAver(Math.round(((saving3ago+saving2ago+saving1ago)/3)*10)/10.0);
 
 		return result;
+	}
+
+	@Override
+	public Top3MonthBudgetDTO getTopListBudget(String token) {
+		ThreeMonthInfoDTO result = new ThreeMonthInfoDTO();
+		String userPk = jwtTokenProvider.getUserPk(token);
+		List<Map> value  = historyMapper.top3List(userPk);
+		int depletedBudget = historyMapper.depleteBudget(userPk);
+		Top3MonthBudgetDTO dto = new Top3MonthBudgetDTO();
+		
+		dto.setTopLists(value);
+		dto.setDepletedBudget(depletedBudget);
+		
+		return dto;
 	}
 	
 }

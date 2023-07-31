@@ -32,5 +32,20 @@
 		from ttf.history
 		where MONTH(pay_time) in (MONTH(sysdate())-1,MONTH(sysdate())-2, MONTH(sysdate())-3) and category_id=2 AND user_id=#{userPk};
 	</select>
+	
+	<select id="top3List" resultType="Map">
+		SELECT detail, price
+		FROM ttf.history
+		WHERE user_id = #{userPk} and price_ck = -1 and substring(pay_time, 1, 7) = substring(now(), 1, 7)
+		order by price desc
+		limit 3
+	</select>
+	
+	<select id ="depleteBudget" resultType="int">
+		SELECT sum(h.price) / u.income * 100
+		FROM ttf.history h JOIN ttf.users u ON h.user_id = u.user_id
+		WHERE h.user_id=#{userPk} and substring(pay_time, 1, 7) = substring(now(), 1, 7) and price_ck = -1
+		
+	</select>
 </mapper>
 
