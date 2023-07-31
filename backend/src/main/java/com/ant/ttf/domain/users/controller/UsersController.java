@@ -17,6 +17,7 @@ import com.ant.ttf.domain.users.dto.request.UsersLoginReqDTO;
 import com.ant.ttf.domain.users.dto.request.UsersRequestDTO;
 import com.ant.ttf.domain.users.dto.response.UserDashboardInfoDTO;
 import com.ant.ttf.domain.users.entity.Users;
+import com.ant.ttf.domain.users.mapper.UsersMapper;
 import com.ant.ttf.domain.users.service.UsersService;
 import com.ant.ttf.global.ResponseFormat;
 import com.ant.ttf.global.ResponseStatus;
@@ -38,13 +39,16 @@ public class UsersController {
 	@Autowired
 	JwtTokenProvider jwtTokenProvider;
 	
+	@Autowired
+	UsersMapper userMapper;
+	
 	
 	// 유저 회원가입 API
 	@PostMapping("/signup")
 	public ResponseEntity<ResponseFormat<String>> createUser(UsersRequestDTO dto) throws Exception{
 	
 		// 서비스 호출
-		
+		userMapper.userSignUp(dto);
 		ResponseFormat<String> responseFormat = new ResponseFormat<>(ResponseStatus.USER_POSTSIGNUP_SUCCESS);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}

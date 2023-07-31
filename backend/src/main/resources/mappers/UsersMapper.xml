@@ -19,6 +19,11 @@
 		WHERE user_id = #{userPk}
 	</select>
 	
+	<insert id="userSignUp" parameterType="com.ant.ttf.domain.users.dto.request.UsersRequestDTO">
+		INSERT INTO users(email, password, name, birth, role, created_at)
+		VALUES (#{email}, #{password}, #{name}, #{birth}, "ROLE_USER", now())
+	</insert>
+	
 	
 </mapper>
 
