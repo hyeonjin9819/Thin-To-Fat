@@ -55,7 +55,7 @@
 		JOIN ttf.categoryinfo b ON a.category_id = b.category_id
 		JOIN ttf.account c ON a.account_id = c.account_id
 		WHERE a.user_id = #{userPk}
-		AND DATE_FORMAT(a.pay_time, "%Y/%m") = #{month}
+		AND DATE_FORMAT(a.pay_time, "%Y/%m") = #{date}
 		<if test = "category != null">And b.category_id = #{category}</if>
 		<if test = "bank != null">And c.bank_info = #{bank}</if>
 		
@@ -69,7 +69,7 @@
 		 (SELECT point FROM ttf.users where user_id = #{userPk}) point,
 		 (select round(sum(sm)/count(*))*-1
 		from 
-		(SELECT date_format(pay_time,"%Y-%m-%d") dt, sum(price*price_ck) sm  FROM ttf.history where user_id = 1 and date_format(pay_time,"%Y-%m") = "2023-07"  and price_ck=-1
+		(SELECT date_format(pay_time,"%Y-%m-%d") dt, sum(price*price_ck) sm  FROM ttf.history where user_id = #{userPk} and date_format(pay_time,"%Y-%m") = #{nowdate}  and price_ck=-1
 		 group by date_format(pay_time,"%Y-%m-%d") 
 		) d) dayChangeAvg
 		from

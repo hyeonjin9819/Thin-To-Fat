@@ -79,7 +79,7 @@ public class HistoryController {
 	public ResponseEntity<ResponseFormat<List<Map>>> getCategoryAll() throws Exception{
 		
 		List<Map> categories = histoyMapper.findCategoryAll();
-		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTHREEMONTH_SUCCESS, categories);
+		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.HISTORY_GET_FILTERCATEGORYELEMENT_SUCCESS, categories);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
@@ -90,7 +90,7 @@ public class HistoryController {
 		
 		String userPk = jwtTokenProvider.getUserPk(token);
 		List<Map> acctinfo = histoyMapper.findUserAccountAll(userPk);
-		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTHREEMONTH_SUCCESS, acctinfo);
+		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.HISTORY_GET_FILTERACCOUNTELEMENT_SUCCESS, acctinfo);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
@@ -100,10 +100,10 @@ public class HistoryController {
 		
 		
 		String userPk = jwtTokenProvider.getUserPk(token);
-		System.out.println(alllist.get("month"));
+
 		alllist.put("userPk",userPk);
 		List<Map> acctinfo = histoyMapper.findUserAllAccountAll(alllist);
-		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTHREEMONTH_SUCCESS, acctinfo);
+		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.HISTORY_GET_FILTERDATA_SUCCESS, acctinfo);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
@@ -114,7 +114,7 @@ public class HistoryController {
 
 		List<Map> acctstatistic = histoyMapper.findUserAcctStatistic(userPk, nowdate);
 		
-		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTHREEMONTH_SUCCESS, acctstatistic);
+		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.HISTORY_GET_HISTORYHEADINFO_SUCCESS, acctstatistic);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
@@ -133,7 +133,6 @@ public class HistoryController {
 		    dailyoutlist.add(0);
 		    dailyInList.add(0);
 		}
-
 		for (Map<String, Object> map : dailyIn) {
 		    if (map.containsKey("dailyindate")) {
 		        BigDecimal value = (BigDecimal) map.get("dailyin");
@@ -148,16 +147,11 @@ public class HistoryController {
 		        BigDecimal value = (BigDecimal) map.get("dailyout");
 		        BigInteger index = (BigInteger) map.get("dailyoutdate");
 		        if (index.intValue() - 1 <day) {
-		        	dailyoutlist.set(index.intValue()-1, value.intValue());
-			        System.out.println(index.intValue() -1);
-			        System.out.println(value.intValue());
-		        	
-		        	
+		        	dailyoutlist.set(index.intValue()-1, value.intValue());	
 		        }
 		        else {
 		        	break;
 		        }
-		
 		    }
 		}
 		Map<String, Object> resultMap = new HashMap<>();
@@ -166,7 +160,7 @@ public class HistoryController {
 		resultMap.put("dayIncomeMax", Collections.max(dailyInList));
 		resultMap.put("dayChangeMax", Collections.max(dailyoutlist));
 
-		ResponseFormat<Map<String, Object>> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTHREEMONTH_SUCCESS, resultMap);
+		ResponseFormat<Map<String, Object>> responseFormat = new ResponseFormat<>(ResponseStatus.HISTORY_GET_HISTORYTAILINFO_SUCCESS, resultMap);
 
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
