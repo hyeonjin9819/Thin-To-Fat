@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ant.ttf.domain.savings.mapper.SavingsMapper;
@@ -49,6 +50,15 @@ public class SavingsController {
 	public ResponseEntity<ResponseFormat<Map<String, Object>>> bankinfo() throws Exception{
 		List<Map<String, Object>> bankEle = savingsMapper.findBankInfo();
 		ResponseFormat<Map<String, Object>> responseFormat = new ResponseFormat<>(ResponseStatus.SAVINGS_GET_BANKINFO_SUCCESS, bankEle);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
+	
+	// 적금 상품리스트 조회 API
+	@GetMapping("/list")
+	public ResponseEntity<ResponseFormat<List<Map>>> getSavingsList(@RequestParam Map param) throws Exception{
+		List<Map> list = savingsMapper.findSavingsList(param);
+		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.SAVING_GET_LIST_SUCCESS, list);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 }

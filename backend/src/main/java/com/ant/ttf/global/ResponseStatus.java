@@ -30,7 +30,10 @@ public enum ResponseStatus {
 	HISTORY_GET_HISTORYINFO_SUCCESs("H009", "수입 / 지출 내역 상단 데이터 가져오기 성공"),
 	
 	// 은행 리스트 API
-	SAVINGS_GET_BANKINFO_SUCCESS("B001", "은행 리스트 가져오기 성공");
+	SAVINGS_GET_BANKINFO_SUCCESS("B001", "은행 리스트 가져오기 성공"),
+	
+	// 적금 상품 검색 조회 API
+	SAVING_GET_LIST_SUCCESS("S001", "적금 상품 정보 가져오기 성공");
 	
 	
 	// 위와 유사하게 적어주세요
