@@ -26,4 +26,10 @@
 		WHERE user_id = #{userPK}
 		</select>
 		
+		<update id="updateNickname" parameterType="com.ant.ttf.domain.library.dto.request.UpdateNicknameDTO">
+		UPDATE ttf.account
+		SET nickname = #{name}
+		WHERE account_id = #{accountPK}
+		</update>
+		
 </mapper>

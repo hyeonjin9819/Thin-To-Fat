@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ant.ttf.domain.library.dto.request.UpdateNicknameDTO;
 import com.ant.ttf.domain.library.dto.response.LibTotalResDTO;
 import com.ant.ttf.domain.library.entity.Account;
 import com.ant.ttf.domain.library.mapper.LibMapper;
@@ -66,5 +67,10 @@ public class LibServiceImpl implements LibService {
 		}
 		return dtoList;
 		
+	}
+	
+	public void updateNickname(String token, UpdateNicknameDTO dto) throws Exception {
+		String userPK = jwtTokenProvider.getUserPk(token);
+		libMapper.updateNickname(dto);
 	}
 }

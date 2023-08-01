@@ -8,14 +8,16 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.ant.ttf.domain.library.dto.request.LibTotalReqDTO;
+import com.ant.ttf.domain.library.dto.request.UpdateNicknameDTO;
 import com.ant.ttf.domain.library.dto.response.LibTotalResDTO;
+import com.ant.ttf.domain.library.mapper.LibMapper;
 import com.ant.ttf.domain.library.service.LibService;
 import com.ant.ttf.global.ResponseFormat;
 import com.ant.ttf.global.ResponseStatus;
@@ -38,5 +40,12 @@ public class LibController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}  
 	
+	// 계좌별 닉네임 변경 API
+	@PutMapping("/nickname")
+	public ResponseEntity<ResponseFormat<ResponseStatus>> updateNickname(@RequestHeader("X-AUTH-TOKEN") String token, @RequestBody UpdateNicknameDTO dto)throws Exception{
+		libService.updateNickname(token, dto);
+		ResponseFormat<ResponseStatus> responseFormat = new ResponseFormat<>(ResponseStatus.LIBRARY_UPDATE_SUCCESS);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
 	
 }

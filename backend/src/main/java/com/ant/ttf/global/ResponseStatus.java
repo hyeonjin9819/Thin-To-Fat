@@ -35,7 +35,8 @@ public enum ResponseStatus {
 	TTF_PUTPAYSTOP_SUCCESS("T003", "한도 초과 결제 실패"),
 	
 	//라이브러리 관련 API
-	LIBRARY_GETALLACC_SUCCESS("U001", "라이브러리 전체 가져오기 성공");
+	LIBRARY_GETALLACC_SUCCESS("L001", "라이브러리 전체 가져오기 성공"),
+	LIBRARY_UPDATE_SUCCESS("L002", "계좌 별 닉네임 수정 성공");
 	
 	
 	
