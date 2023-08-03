@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import com.ant.ttf.domain.users.dto.request.UsersLoginReqDTO;
 import com.ant.ttf.domain.users.dto.request.UsersRequestDTO;
 import com.ant.ttf.domain.users.dto.response.UserDashboardInfoDTO;
 import com.ant.ttf.domain.users.entity.Users;
+import com.ant.ttf.domain.users.mapper.UsersMapper;
 import com.ant.ttf.domain.users.service.UsersService;
 import com.ant.ttf.global.ResponseFormat;
 import com.ant.ttf.global.ResponseStatus;
@@ -38,13 +40,16 @@ public class UsersController {
 	@Autowired
 	JwtTokenProvider jwtTokenProvider;
 	
+	@Autowired
+	UsersMapper userMapper;
+	
 	
 	// 유저 회원가입 API
 	@PostMapping("/signup")
 	public ResponseEntity<ResponseFormat<String>> createUser(UsersRequestDTO dto) throws Exception{
 	
 		// 서비스 호출
-		
+		userMapper.userSignUp(dto);
 		ResponseFormat<String> responseFormat = new ResponseFormat<>(ResponseStatus.USER_POSTSIGNUP_SUCCESS);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
@@ -65,5 +70,22 @@ public class UsersController {
     	return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
     }
     
+    // 대시보드 상단 월 예산 수정하는 API
+    @PutMapping("/dashboard/income")
+    public ResponseEntity<ResponseFormat<String>> updateIncome(@RequestHeader("X-AUTH-TOKEN") String token, int income) throws Exception{
+    	String userPk = jwtTokenProvider.getUserPk(token);
+    	userMapper.updateIncome(userPk, income);
+    	ResponseFormat<String> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_PUT_USERINCOME_SUCCESS);
+    	return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+    }
+    
+    // 대시보드 상단 목표 금 수정하는 API
+    @PutMapping("/dashboard/goalBudget")
+    public ResponseEntity<ResponseFormat<String>> updateGoalBudget(@RequestHeader("X-AUTH-TOKEN") String token, int goalBudget) throws Exception{
+    	String userPk = jwtTokenProvider.getUserPk(token);
+    	userMapper.updateGoalBudget(userPk, goalBudget);
+    	ResponseFormat<String> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_PUT_USERBUDGET_SUCCESS);
+    	return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+    }
    
 }

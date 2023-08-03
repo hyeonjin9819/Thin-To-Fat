@@ -1,9 +1,12 @@
 package com.ant.ttf.domain.history.service;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,7 @@ import com.ant.ttf.domain.history.dto.response.CategoryExpendsDTO;
 import com.ant.ttf.domain.history.dto.response.MonthlyPriceDTO;
 import com.ant.ttf.domain.history.dto.response.ThreeMonthInfoDTO;
 import com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO;
+import com.ant.ttf.domain.history.dto.response.Top3MonthBudgetDTO;
 import com.ant.ttf.domain.history.mapper.HistoryMapper;
 import com.ant.ttf.domain.users.entity.Users;
 import com.ant.ttf.domain.users.mapper.UsersMapper;
@@ -57,8 +61,67 @@ public class HistoryServiceImpl implements HistoryService {
         }
 		return today;
 	}
+	
+	// 3개월 기준 지출 상태 정보
 	public ThreeMonthInfoDTO getThreeMonthInfo(String token) {
-		return null;
+		ThreeMonthInfoDTO result = new ThreeMonthInfoDTO();
+		String userPk = jwtTokenProvider.getUserPk(token);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("userPk", userPk);
+		LocalDate now = LocalDate.now();
+		int monthValue = now.getMonthValue();
+		log.info("이번달"+monthValue);
+		
+		
+		//카페
+		int cafeTime = historyMapper.findCafeExpendCount(userPk);
+		result.setCafeTimes(cafeTime);
+		result.setCafeAver(Math.round((cafeTime/12)*10)/10.0);
+		
+		//지출합계
+		map.put("month",monthValue-1);
+		double expend1ago = historyMapper.findMonthExpend(map);
+		result.setExpend1ago(expend1ago);
+		map.put("month",monthValue-2);
+		double expend2ago = historyMapper.findMonthExpend(map);
+		result.setExpend2ago(expend2ago);
+		map.put("month",monthValue-3);
+		double expend3ago = historyMapper.findMonthExpend(map);
+		result.setExpend3ago(expend3ago);
+		
+		result.setExpendTotal(expend1ago+expend2ago+expend3ago);
+		result.setExpendAver(Math.round(((expend1ago+expend2ago+expend3ago)/3)*10)/10.0);
+		
+		//저축합계
+		map.put("category", 11);
+		map.put("month",monthValue-1);
+		double saving1ago = historyMapper.findMonthExpend(map);
+		result.setSaving1ago(saving1ago);
+		map.put("month",monthValue-2);
+		double saving2ago = historyMapper.findMonthExpend(map);
+		result.setSaving2ago(saving2ago);
+		map.put("month",monthValue-3);
+		double saving3ago = historyMapper.findMonthExpend(map);
+		result.setSaving3ago(saving3ago);
+		
+		result.setSavingAver(Math.round(((saving3ago+saving2ago+saving1ago)/3)*10)/10.0);
+
+		return result;
+	}
+
+	@Override
+	public Top3MonthBudgetDTO getTopListBudget(String token) {
+		ThreeMonthInfoDTO result = new ThreeMonthInfoDTO();
+		String userPk = jwtTokenProvider.getUserPk(token);
+		List<Map> value  = historyMapper.top3List(userPk);
+		int depletedBudget = historyMapper.depleteBudget(userPk);
+		Top3MonthBudgetDTO dto = new Top3MonthBudgetDTO();
+		
+		dto.setTopLists(value);
+		dto.setDepletedBudget(depletedBudget);
+		
+		return dto;
 	}
 	
 	// 매달 예상 고정 지출
@@ -77,5 +140,4 @@ public class HistoryServiceImpl implements HistoryService {
 		return monPriceList;
 	}
 	
-	//Map<String,Object>map = new HashMap<String,Object>();????
 }

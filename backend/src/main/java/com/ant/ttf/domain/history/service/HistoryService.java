@@ -8,6 +8,7 @@ import com.ant.ttf.domain.history.dto.response.CategoryExpendsDTO;
 import com.ant.ttf.domain.history.dto.response.MonthlyPriceDTO;
 import com.ant.ttf.domain.history.dto.response.ThreeMonthInfoDTO;
 import com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO;
+import com.ant.ttf.domain.history.dto.response.Top3MonthBudgetDTO;
 
 @Service
 public interface HistoryService {
@@ -16,4 +17,5 @@ public interface HistoryService {
 	public ThreeMonthInfoDTO getThreeMonthInfo(String token);
 	public String fixedPrice(String token);
 	public List<MonthlyPriceDTO> getMonPriceList (String token);
+	public Top3MonthBudgetDTO getTopListBudget(String token);
 }
