@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LibTotalResDTO {
 	
+	private Long accountId;
 	private String name; // 은행이름
 	private String accNum; // 계좌번호
 	private String type; //계좌타입

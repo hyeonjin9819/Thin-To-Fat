@@ -30,6 +30,7 @@ public class Account {
 	public LibTotalResDTO convertDTO(Account userAcc) {
 		
 		return LibTotalResDTO.builder()
+				.accountId(userAcc.getAccountId())
 				.accNum(userAcc.getAccNum())
 				.type(userAcc.getType())
 				.accCk(userAcc.getAccCk())
