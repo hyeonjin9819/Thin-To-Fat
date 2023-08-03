@@ -18,6 +18,24 @@
 		GROUP BY date_format(pay_time, '%Y-%m-%d');
 	</select>
 	
+	<select id="expectMonthlyFixedPrice" resultType="String">
+		SELECT round(avg(total_price), 0) as average_price
+		FROM (
+			SELECT sum(price) as total_price
+			FROM ttf.history
+			WHERE price_ck = -1 AND fixed = 1 AND pay_time >= DATE_SUB(LAST_DAY(NOW()), INTERVAL 2 MONTH) AND pay_time  <![CDATA[<]]> DATE_SUB(LAST_DAY(NOW()), INTERVAL 1 MONTH)  		
+			GROUP BY user_id = #{userPk}
+			) as subquery;	
+	</select>
+	
+	<select id="findMonthlyExpend" resultType="com.ant.ttf.domain.history.dto.response.MonthlyPriceDTO">
+		SELECT MONTH(pay_time) as month, sum(price) as expend
+		FROM ttf.history
+		WHERE price_ck = -1 AND YEAR(pay_time) = YEAR(sysdate()) AND user_id=#{userPk}
+		GROUP BY MONTH(pay_time)
+		ORDER BY month;
+	</select>
+
 	<select id="findMonthExpend" parameterType="hashMap" resultType="double">
 		SELECT IFNULL(ROUND((SUM(price)/10000),1), 0)
 		FROM ttf.history
