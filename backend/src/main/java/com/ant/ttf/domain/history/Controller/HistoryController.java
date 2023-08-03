@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ant.ttf.domain.history.dto.response.CategoryExpendsDTO;
 import com.ant.ttf.domain.history.dto.response.ThreeMonthInfoDTO;
 import com.ant.ttf.domain.history.dto.response.TodayStateInfoDTO;
+import com.ant.ttf.domain.history.dto.response.Top3MonthBudgetDTO;
 import com.ant.ttf.domain.history.mapper.HistoryMapper;
 import com.ant.ttf.domain.history.service.HistoryService;
 import com.ant.ttf.global.ResponseFormat;
@@ -165,9 +166,13 @@ public class HistoryController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 
-
-	
-
-
+	//Top 3, 예산소지율 가져오는 API
+	@GetMapping("/dashboard/top3")
+	public ResponseEntity<ResponseFormat<Top3MonthBudgetDTO>> topList(@RequestHeader("X-AUTH-TOKEN") String token) throws Exception{
+		
+		Top3MonthBudgetDTO result = historyService.getTopListBudget(token);
+		ResponseFormat<Top3MonthBudgetDTO> responseFormat = new ResponseFormat<>(ResponseStatus.DASHBOARD_GET_HISTORYTOP3_SUCCESS, result);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
 }
 

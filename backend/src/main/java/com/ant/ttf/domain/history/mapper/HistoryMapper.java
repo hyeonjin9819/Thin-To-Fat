@@ -22,5 +22,7 @@ public interface HistoryMapper {
 	List<Map> findUserdailyAcctStatistic(String userPk, String nowdate);
 	List<Map> findUserDailyOut(String userPk, String nowdate);
 	List<Map> findUserDailyIn(String userPk, String nowdate);
+	List<Map> top3List(String userPk);
+	int depleteBudget(String userPk);
 }
 
