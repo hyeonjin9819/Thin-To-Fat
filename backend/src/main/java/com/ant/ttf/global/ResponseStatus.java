@@ -38,8 +38,12 @@ public enum ResponseStatus {
 	LIBRARY_GETALLACC_SUCCESS("L001", "라이브러리 전체 가져오기 성공"),
 	LIBRARY_UPDATE_SUCCESS("L002", "계좌 별 닉네임 수정 성공");
 	
-	
-	
+	HISTORY_GET_FILTERCATEGORYELEMENT_SUCCESS("H007", "필터 카테고리 내용 가져오기 성공"),
+	HISTORY_GET_FILTERACCOUNTELEMENT_SUCCESS("H008", "필터 계좌 내용 가져오기 성공"),
+	HISTORY_GET_FILTERDATA_SUCCESS("H009", "달, 카테고리, 은행 별 지출내역 가져오기 성공"),
+	HISTORY_GET_HISTORYHEADINFO_SUCCESS("H010", "최고지출일,일평균지출,월별최고지출액, 월별최고수입액, 개인포인트 데이터 가져오기 성공"),
+	HISTORY_GET_HISTORYTAILINFO_SUCCESS("H011", "일일최고 수입, 일일최고 지출, 당월 일별 수입, 당월 일별 지출 데이터 가져오기 성공");
+
 	// 위와 유사하게 적어주세요
 	
 	private final String code;
