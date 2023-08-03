@@ -34,6 +34,7 @@
 		WHERE price_ck = -1 AND YEAR(pay_time) = YEAR(sysdate()) AND user_id=#{userPk}
 		GROUP BY MONTH(pay_time)
 		ORDER BY month;
+	</select>
 
 	<select id="findMonthExpend" parameterType="hashMap" resultType="double">
 		SELECT IFNULL(ROUND((SUM(price)/10000),1), 0)
