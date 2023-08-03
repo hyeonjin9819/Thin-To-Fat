@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface SavingsMapper {
-	List<Map<String, Object>> findBankInfo();
+	List<Map> findBankInfo();
 	
 	List<Map> findSavingsList(Map param);
 }

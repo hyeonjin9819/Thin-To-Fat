@@ -36,7 +36,7 @@ public enum ResponseStatus {
 	
 	//라이브러리 관련 API
 	LIBRARY_GETALLACC_SUCCESS("L001", "라이브러리 전체 가져오기 성공"),
-	LIBRARY_UPDATE_SUCCESS("L002", "계좌 별 닉네임 수정 성공");
+	LIBRARY_UPDATE_SUCCESS("L002", "계좌 별 닉네임 수정 성공"),
 
 	// 은행 리스트 API
 	SAVINGS_GET_BANKINFO_SUCCESS("B001", "은행 리스트 가져오기 성공"),

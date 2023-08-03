@@ -47,9 +47,9 @@ public class SavingsController {
 	
 	// 은행 리스트 불러오는 API
 	@GetMapping("/bankInfo")
-	public ResponseEntity<ResponseFormat<Map<String, Object>>> bankinfo() throws Exception{
-		List<Map<String, Object>> bankEle = savingsMapper.findBankInfo();
-		ResponseFormat<Map<String, Object>> responseFormat = new ResponseFormat<>(ResponseStatus.SAVINGS_GET_BANKINFO_SUCCESS, bankEle);
+	public ResponseEntity<ResponseFormat<List<Map>>> bankinfo() throws Exception{
+		List<Map> bankEle = savingsMapper.findBankInfo();
+		ResponseFormat<List<Map>> responseFormat = new ResponseFormat<>(ResponseStatus.SAVINGS_GET_BANKINFO_SUCCESS, bankEle);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 	

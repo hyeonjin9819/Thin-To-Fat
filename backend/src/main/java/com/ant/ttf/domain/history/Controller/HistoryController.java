@@ -109,6 +109,7 @@ public class HistoryController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
+	
 	//유저의 모든 지출내역 정보를 가져오는 API
 	@GetMapping("/userAllAccountInfo")
 	public ResponseEntity<ResponseFormat<List<Map>>> getUserAllAccountInfo(@RequestHeader("X-AUTH-TOKEN") String token, @RequestParam Map alllist) throws Exception{
@@ -122,6 +123,7 @@ public class HistoryController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
+	
 	//유저의 모든 지출내역 정보를 가져오는 API
 	@GetMapping("/info")
 	public ResponseEntity<ResponseFormat<List<Map>>> getUserAcctStatistic(@RequestHeader("X-AUTH-TOKEN") String token, @RequestParam String nowdate) throws Exception{
@@ -133,6 +135,7 @@ public class HistoryController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
+	
 	//유저의 한달 모든 수입과 지출 리스트로 담는 API
 	@GetMapping("/dailyinout")
 	public ResponseEntity<ResponseFormat<Map<String, Object>>> getDailyInOut(@RequestHeader("X-AUTH-TOKEN") String token, @RequestParam String nowdate) throws Exception{

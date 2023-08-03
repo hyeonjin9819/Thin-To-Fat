@@ -14,7 +14,6 @@ public class ResponseFormat<T> {
 
     private T result;
     
-    private List<Map<String, Object>> results;
 
     public ResponseFormat(ResponseStatus status) {
         this.code = status.getCode();
@@ -27,10 +26,5 @@ public class ResponseFormat<T> {
         this.result = result;
     }
     
-    public ResponseFormat(ResponseStatus status,  List<Map<String, Object>> results){
-        this.code = status.getCode();
-        this.message = status.getMessage();
-        this.results = results;
-    }
     
 }
