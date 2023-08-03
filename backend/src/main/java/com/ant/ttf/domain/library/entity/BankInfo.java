@@ -13,9 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BankInfo {
 	
-	private Long bank_id;
+	private Long bankId;
 	private String name;
-	private String img_url;
-	private int bank_class;
+	private String imgUrl;
+	private int bankClass;
 	
 }

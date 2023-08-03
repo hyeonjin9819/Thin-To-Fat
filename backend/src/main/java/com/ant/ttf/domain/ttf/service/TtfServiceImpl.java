@@ -28,7 +28,7 @@ public class TtfServiceImpl implements TtfService {
 	public void thinJoin(String token, TtfJoinReqDTO dto) throws Exception { // 신파일러 적금 계좌 가입
 		String userPK = jwtTokenProvider.getUserPk(token);
 //		Long accountId = ttfMapper.findAccountId(userPK); // 프론트단에서 account_id를 받는 요청이 따로 없어서, mapper에 있는 account테이블 이용해서 가져옴
-		String accNum = ttfMapper.findAccountNum(dto.getAccount_id());
+		String accNum = ttfMapper.findAccountNum(dto.getAccountId());
 		Long userPK2 = Long.parseLong(userPK);
 		
 		Ttf ttf = dto.ttfForEntity(dto, userPK2, accNum);
@@ -37,16 +37,16 @@ public class TtfServiceImpl implements TtfService {
 	}
 	
 	@Override
-	public boolean ttfPay(String token, String product_price) throws Exception { // 한도초과시 상품결제 막기
+	public boolean ttfPay(String token, String productPrice) throws Exception { // 한도초과시 상품결제 막기
 		String userPK = jwtTokenProvider.getUserPk(token);
 		int limitBalance = ttfMapper.seeLimit(userPK);
-		int productPrice = Integer.parseInt(product_price);
+		int productPrice2 = Integer.parseInt(productPrice);
 		
-		if(limitBalance < productPrice) {
+		if(limitBalance < productPrice2) {
 			log.info("사용가능한도 초과");
 			return false;
 		} else { //사용가능 한도가 상품가격보다 크면 결제
-			limitBalance = limitBalance - productPrice;
+			limitBalance = limitBalance - productPrice2;
 			Map map = new HashMap();
 			map.put("userPK", userPK);
 			map.put("limitBalance", limitBalance);

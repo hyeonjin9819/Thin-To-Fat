@@ -12,16 +12,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ttf {
-	private Long ttf_id;
-	private Long user_id;
-	private Long account_id;
+	private Long ttfId;
+	private Long userId;
+	private Long accountId;
 
-	private String start_date;
-	private String end_date;
-	private int acc_ck;
+	private String startDate;
+	private String endDate;
+	private int accCk;
 	private int balance;
 	private int limitAmount;
-	private String account_num;
+	private String accountNum;
 	private String qrImage;
 	private int bnpl;
 	private int cans;
