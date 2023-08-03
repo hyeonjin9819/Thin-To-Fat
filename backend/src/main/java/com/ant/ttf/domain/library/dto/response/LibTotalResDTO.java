@@ -14,9 +14,9 @@ import lombok.Setter;
 public class LibTotalResDTO {
 	
 	private String name; // 은행이름
-	private String acc_num; // 계좌번호
+	private String accNum; // 계좌번호
 	private String type; //계좌타입
-	private int acc_ck;  // 0: 입출금 계좌, 1: 적금 계좌 2: 신파일러 출금계좌
+	private int accCk;  // 0: 입출금 계좌, 1: 적금 계좌 2: 신파일러 출금계좌
 	private String nickname;
 	private int balance;
 	
@@ -25,7 +25,7 @@ public class LibTotalResDTO {
 	// 적금계좌면 monthBalance는 0
 	private int monthBalance; 
 
-	private String img_url; //은행 이미지 url
+	private String imgUrl; //은행 이미지 url
 	
 
 }

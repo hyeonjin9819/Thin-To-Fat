@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TtfJoinReqDTO {
-	private long account_id;
+	private long accountId;
 	private int joinPeriod;
 	private int cans;
 	
@@ -30,12 +30,12 @@ public class TtfJoinReqDTO {
 		String endDate = endT.toString();
 		
 		return Ttf.builder()
-				.user_id(userPK2)
-				.account_id(dto.getAccount_id())
-				.start_date(isTime)
-				.end_date(endDate)
-				.acc_ck(1)
-				.account_num(accNum)
+				.userId(userPK2)
+				.accountId(dto.getAccountId())
+				.startDate(isTime)
+				.endDate(endDate)
+				.accCk(1)
+				.accountNum(accNum)
 				.cans(dto.getCans())
 				.build();				
 	}

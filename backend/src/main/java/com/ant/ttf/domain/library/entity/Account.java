@@ -17,22 +17,22 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Account {
 	
-	private Long account_id; 
-	private Long user_id;
-	private Long bank_info;
+	private Long accountId; 
+	private Long userId;
+	private Long bankInfo;
 	private String nickname;
 	private String type; 
-	private LocalDateTime created_at;
-	private String acc_num; 
+	private LocalDateTime createdAt;
+	private String accNum; 
 	private int balance;
-	private int acc_ck;
+	private int accCk;
 	
 	public LibTotalResDTO convertDTO(Account userAcc) {
 		
 		return LibTotalResDTO.builder()
-				.acc_num(userAcc.getAcc_num())
+				.accNum(userAcc.getAccNum())
 				.type(userAcc.getType())
-				.acc_ck(userAcc.getAcc_ck())
+				.accCk(userAcc.getAccCk())
 				.nickname(userAcc.getNickname())
 				.balance(userAcc.getBalance())
 				.build();			
